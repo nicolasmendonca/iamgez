@@ -1,9 +1,10 @@
-import * as counterReducers from './counter';
+import { IImageFile } from '../../types/files';
+import * as filesReducer from './files';
 
 export interface IStore {
-  counterReducer: number;
+  filesReducer: IImageFile[];
 }
 
 export default {
-  ...counterReducers,
+  ...filesReducer
 };
