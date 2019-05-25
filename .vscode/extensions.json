@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    "eamodio.gitlens",
+    "CoenraadS.bracket-pair-colorizer-2",
+    "jpoissonnier.vscode-styled-components"
+  ]
+}
