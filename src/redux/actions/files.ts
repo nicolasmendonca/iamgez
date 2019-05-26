@@ -1,17 +1,33 @@
-import uuid from 'uuid/v4';
-import { IImageFile, IIndexedFile } from '../../types/files';
-import { ADD_FILES } from '../constants/files';
+import { reduxImagesService } from '../../App';
+import { IIndexedFile } from '../../services/ReduxImagesService';
+import { ADD_FILES, FILE_PROCESSED } from '../constants/files';
 
-interface IAddFilesAction {
+interface addFilesAction {
   type: typeof ADD_FILES;
   payload: IIndexedFile[];
 }
 
-export type addFilesActionCreator = (files: IImageFile[]) => IAddFilesAction;
+interface fileProcessedAction {
+  type: typeof FILE_PROCESSED;
+  payload: IIndexedFile;
+}
 
-export const addFiles: addFilesActionCreator = (files) => ({
-  payload: files.map((file) => ({ id: uuid(), file })),
-  type: ADD_FILES
+export const addFiles = (files: File[]): addFilesAction => {
+  const indexedFiles = files.map((file, i) =>
+    reduxImagesService.createImage(file, i)
+  );
+  indexedFiles.forEach((file) => reduxImagesService.addToQueue(file));
+  reduxImagesService.startProcessing();
+
+  return {
+    payload: indexedFiles,
+    type: ADD_FILES
+  };
+};
+
+export const fileProcessed = (file: IIndexedFile): fileProcessedAction => ({
+  type: FILE_PROCESSED,
+  payload: file
 });
 
-export type FileActions = IAddFilesAction;
+export type FILES_ACTIONS = addFilesAction | fileProcessedAction;

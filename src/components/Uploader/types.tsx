@@ -1,9 +1,8 @@
 import { DragEvent } from 'react';
-import { IImageFile } from '../../types/files';
 
 export type DropFilesEventHandler = (
-  acceptedFiles: IImageFile[],
-  rejectedFiles: IImageFile[],
+  acceptedFiles: File[],
+  rejectedFiles: File[],
   event: DragEvent<HTMLDivElement>
 ) => void;
 

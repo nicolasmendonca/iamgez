@@ -1,8 +1,8 @@
-import { IImageFile } from '../../types/files';
+import { IIndexedFile } from '../../services/ReduxImagesService';
 import * as filesReducer from './files';
 
 export interface IStore {
-  filesReducer: IImageFile[];
+  filesReducer: IIndexedFile[];
 }
 
 export default {

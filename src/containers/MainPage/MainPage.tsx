@@ -1,21 +1,21 @@
 import React, { Fragment, SFC } from 'react';
 import { connect } from 'react-redux';
-import { IImageFile } from '../../types/files';
-import ImagesCompresserContainer from '../Compresser/ImagesCompresser.container';
+import { IStore } from '../../redux/reducers';
+import { IIndexedFile } from '../../services/ReduxImagesService';
 import UploaderContainer from '../Uploader/Uploader.container';
+import { MainPageContainer } from './MainPage.styles';
 
 interface IMainPageProps {
-  files: IImageFile[];
+  files: IIndexedFile[];
 }
 
 const MainPage: SFC<IMainPageProps> = ({ files }) => (
-  <Fragment>
+  <MainPageContainer>
     <UploaderContainer />
-    {files && files.length > 0 && <ImagesCompresserContainer />}
-  </Fragment>
+  </MainPageContainer>
 );
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: IStore) => ({
   files: state.filesReducer
 });
 
