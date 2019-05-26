@@ -1,17 +1,11 @@
-import uuid from 'uuid/v4';
-import { IImageFile, IIndexedFile } from '../../types/files';
+import { reduxImagesService } from '../../App';
 import { ADD_FILES } from '../constants/files';
 
-interface IAddFilesAction {
-  type: typeof ADD_FILES;
-  payload: IIndexedFile[];
-}
+export const addFiles = (files: File[]) => {
+  files.forEach((file) => reduxImagesService.processFile(file));
 
-export type addFilesActionCreator = (files: IImageFile[]) => IAddFilesAction;
-
-export const addFiles: addFilesActionCreator = (files) => ({
-  payload: files.map((file) => ({ id: uuid(), file })),
-  type: ADD_FILES
-});
-
-export type FileActions = IAddFilesAction;
+  return {
+    payload: files,
+    type: ADD_FILES
+  };
+};

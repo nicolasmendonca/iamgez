@@ -2,11 +2,11 @@ import React, { DragEvent, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Uploader from '../../components/Uploader';
 import { DropFilesEventHandler } from '../../components/Uploader/types';
-import { addFiles, addFilesActionCreator } from '../../redux/actions/files';
+import { addFiles } from '../../redux/actions/files';
 import { IImageFile } from '../../types/files';
 
 interface IUploaderContainerProps {
-  onFilesDrop: addFilesActionCreator;
+  onFilesDrop: typeof addFiles;
 }
 
 class UploaderContainer extends PureComponent<IUploaderContainerProps, {}> {
