@@ -3,30 +3,14 @@ import uuid from 'uuid/v4';
 import { fileProcessed } from '../redux/actions/files';
 import FileManager from './FileManager';
 
-interface IFileWithPreview {
-  file: File;
-  preview?: string;
-}
-
 export interface IIndexedFile {
   index: number;
   id: string;
-  original: IFileWithPreview;
-  compressed?: IFileWithPreview;
+  original: File;
+  compressed?: File;
 }
 
 class ReduxImagesService {
-  public static hasPreview(file: IFileWithPreview) {
-    return !!file.preview;
-  }
-
-  public static isLoaded(idFile: IIndexedFile) {
-    return (
-      ReduxImagesService.hasPreview(idFile.original) &&
-      idFile.compressed &&
-      ReduxImagesService.hasPreview(idFile.compressed)
-    );
-  }
   private store: Store;
   private queue: IIndexedFile[] = [];
 
@@ -59,7 +43,7 @@ class ReduxImagesService {
     return {
       index,
       id: uuid(),
-      original: { file }
+      original: file
     };
   }
 }

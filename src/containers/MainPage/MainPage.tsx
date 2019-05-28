@@ -10,11 +10,6 @@ interface IMainPageProps {
 const MainPage: SFC<IMainPageProps> = ({ files }) => (
   <Fragment>
     <UploaderContainer />
-    {files
-      .filter((file) => file.compressed && file.compressed.preview)
-      .map((file) => (
-        <img key={file.id} src={file.compressed!.preview} />
-      ))}
   </Fragment>
 );
 

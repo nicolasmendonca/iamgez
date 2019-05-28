@@ -13,27 +13,13 @@ class FileManager {
   public compressAndGetPreview(): Promise<IIndexedFile> {
     return new Promise(async (resolve, reject) => {
       try {
-        const originalPreview = await new Previewer(
-          this.file.original.file
-        ).buildPreview();
-        const compressed = await new Compressor(
-          this.file.original.file
-        ).compress();
-        const compressedPreview = await new Previewer(
-          compressed
-        ).buildPreview();
+        const compressed = await new Compressor(this.file.original).compress();
 
         return resolve({
-          compressed: {
-            file: compressed,
-            preview: compressedPreview
-          },
+          compressed,
           index: this.file.index,
           id: this.file.id,
-          original: {
-            file: this.file.original.file,
-            preview: originalPreview
-          }
+          original: this.file.original
         });
       } catch (e) {
         reject(e);
