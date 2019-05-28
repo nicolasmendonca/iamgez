@@ -1,17 +1,20 @@
 import React, { Fragment, SFC } from 'react';
 import { connect } from 'react-redux';
-import { IImageFile } from '../../types/files';
-import ImagesCompresserContainer from '../Compresser/ImagesCompresser.container';
+import { IIndexedFile } from '../../services/ReduxImagesService';
 import UploaderContainer from '../Uploader/Uploader.container';
 
 interface IMainPageProps {
-  files: IImageFile[];
+  files: IIndexedFile[];
 }
 
 const MainPage: SFC<IMainPageProps> = ({ files }) => (
   <Fragment>
     <UploaderContainer />
-    {files && files.length > 0 && <ImagesCompresserContainer />}
+    {files
+      .filter((file) => file.compressed && file.compressed.preview)
+      .map((file) => (
+        <img key={file.id} src={file.compressed!.preview} />
+      ))}
   </Fragment>
 );
 

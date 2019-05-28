@@ -1,30 +1,24 @@
 import uuid from 'uuid/v4';
 import Compressor from './Compresser';
 import Previewer from './Previewer';
-
-export interface ICompressedFileWithPreview {
-  id: string;
-  original: IFileWithPreview;
-  compressed: IFileWithPreview;
-}
-
-export interface IFileWithPreview {
-  file: File;
-  preview: string;
-}
+import { IIndexedFile } from './ReduxImagesService';
 
 class FileManager {
-  private file: File;
+  private file: IIndexedFile;
 
-  constructor(file: File) {
+  constructor(file: IIndexedFile) {
     this.file = file;
   }
 
-  public compressAndGetPreview(): Promise<ICompressedFileWithPreview> {
+  public compressAndGetPreview(): Promise<IIndexedFile> {
     return new Promise(async (resolve, reject) => {
       try {
-        const originalPreview = await new Previewer(this.file).buildPreview();
-        const compressed = await new Compressor(this.file).compress();
+        const originalPreview = await new Previewer(
+          this.file.original.file
+        ).buildPreview();
+        const compressed = await new Compressor(
+          this.file.original.file
+        ).compress();
         const compressedPreview = await new Previewer(
           compressed
         ).buildPreview();
@@ -34,9 +28,10 @@ class FileManager {
             file: compressed,
             preview: compressedPreview
           },
-          id: uuid(),
+          index: this.file.index,
+          id: this.file.id,
           original: {
-            file: this.file,
+            file: this.file.original.file,
             preview: originalPreview
           }
         });
