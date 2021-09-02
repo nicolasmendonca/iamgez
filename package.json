@@ -14,7 +14,7 @@
     "compressorjs": "^1.0.5",
     "enzyme": "^3.9.0",
     "file-saver": "^2.0.2",
-    "immer": "^3.1.2",
+    "immer": "^9.0.6",
     "jszip": "^3.2.1",
     "juxtaposejs": "^1.1.6",
     "numeral": "^2.0.6",
